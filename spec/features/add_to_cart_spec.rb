@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "ProductDetails", type: :feature, js: true do
-
+RSpec.feature "AddToCarts", type: :feature, js: true do
   # Setup
   before :each do
     @category = Category.create! name: 'Apparel'
@@ -17,17 +16,19 @@ RSpec.feature "ProductDetails", type: :feature, js: true do
     end
   end
 
-  scenario "They see the product details" do
+  scenario "The see incremented cart items counter" do
 
     visit root_path
 
-    expect(page).to have_no_css('.product-detail')
+    expect(page).to have_content('My Cart (0)')
 
-    find('.product a.btn-default', match: :first).click
+    find('.product button.btn-primary', match: :first).click
 
     # commented out b/c it's for debugging only
     # save_and_open_screenshot
 
-    expect(page).to have_css('.product-detail')
+    expect(page).to have_content('My Cart (1)')
   end
+
+
 end
